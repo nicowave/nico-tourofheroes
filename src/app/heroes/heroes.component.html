@@ -1,5 +1,4 @@
 
-
   <!-- HERO HEADING -->
   <h2>
     My Heroes
@@ -19,32 +18,12 @@
     </li>
   </ul>
 
-<!-- ngIf directive used to prevent 'empty-states' -->
-<div *ngIf="selectedHero">
-
-  <!-- SELECTED HERO -->
-  <!-- title, 'selectedHero.name,' uses uppercase-pipe -->
-  <h4>
-    {{ selectedHero.name | uppercase }} Details
-  </h4>
-  <!-- Details -->
-  <!-- one-way-binding -->
-  <div>
-    <span>id: </span>
-    {{ selectedHero.id }}
-  </div>
-  <div>
-    <span>name: </span>
-    {{ selectedHero.name }}
-  </div>
-  <!-- Editing -->
-  <!-- two-way-binding -->
-  <div>
-    <label>name: 
-      <input [(ngModel)]="selectedHero.name" placeholder="name">
-    </label>
-  </div>
-</div>
+<!-- property binding: 'selectedHero' to '[hero]' property -->
+<app-hero-detail [hero]="selectedHero"></app-hero-detail>
 
 
 
+<!-- Refactoring the original HeroesComponent into two components yields benefits, both now and in the future: You simplified
+the HeroesComponent by reducing its responsibilities. You can evolve the HeroDetailComponent into a rich hero editor without
+touching the parent HeroesComponent. You can evolve the HeroesComponent without touching the hero detail view. You can re-use
+the HeroDetailComponent in the template of some future component. -->
