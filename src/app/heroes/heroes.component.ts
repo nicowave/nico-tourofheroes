@@ -12,7 +12,6 @@ import { HEROES } from '../data-model-heroes';
 })
 
 
-
 export class HeroesComponent implements OnInit {
 
   heroes = HEROES;
@@ -22,10 +21,6 @@ export class HeroesComponent implements OnInit {
     this.selectedHero = hero;
   }
 
-  // hero: Hero = {
-  //   id: 1,
-  //   name: 'Windstorm'
-  // } 
 
   constructor() { }
 

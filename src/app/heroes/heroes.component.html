@@ -9,6 +9,7 @@
   <ul class="heroes">
     <!-- ngFor & event-binding -->
     <li *ngFor="let hero of heroes" 
+        [class.selected]="hero === selectedHero"
         (click)="onSelect(hero)">
 
       <span class="badge">
@@ -39,7 +40,7 @@
   <!-- Editing -->
   <!-- two-way-binding -->
   <div>
-    <label for="">
+    <label>name: 
       <input [(ngModel)]="selectedHero.name" placeholder="name">
     </label>
   </div>
