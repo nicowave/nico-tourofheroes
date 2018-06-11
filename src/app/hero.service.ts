@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { Hero } from './hero';
 import { HEROES } from './data-model-heroes';
+import { MessageService } from './message.service';
 
 
 @Injectable({
@@ -20,5 +21,7 @@ export class HeroService {
   }
 
 
-  constructor() { }
+  constructor(private messageService: MessageService) {
+    
+   }
 }
