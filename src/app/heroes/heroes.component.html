@@ -3,17 +3,14 @@
   <h2>
     My Heroes
   </h2>
-
+  
   <!-- HERO LIST -->
+  <!-- ngFor & event-binding -->
   <ul class="heroes">
-    <!-- ngFor & event-binding -->
     <li *ngFor="let hero of heroes" 
         [class.selected]="hero === selectedHero"
-        (click)="onSelect(hero)">
-
-      <span class="badge">
-        {{ hero.id }}
-      </span>
+        (click)="onSelect(hero)"> 
+      <span class="badge"> {{ hero.id }} </span>
       {{ hero.name }}
     </li>
   </ul>
