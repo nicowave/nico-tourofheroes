@@ -1,2 +1,16 @@
 
 <!-- message component template HTML -->
+<div *ngIf="messageService.messages.length">
+
+  <h2>Messages</h2>
+
+  <!-- button clears messages -->
+  <button class="clear"
+          (click)="messageService.clear()">
+    clear messages
+  </button>
+
+  <div *ngFor='let message of messageService.messages'>
+    {{ message }}
+  </div>
+</div>
