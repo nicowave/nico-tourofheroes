@@ -14,7 +14,6 @@ import { MessageService } from './message.service';
 })
 
 
-
 export class HeroService {
 
   constructor(
@@ -23,47 +22,42 @@ export class HeroService {
   
   private heroesUrl = 'api/heroes'; 
 
-
+  // Private Methods
   private log(message: string) {
     // sends messages from HeroService
     this.messageService.add('HeroService: ' + message);
   }
 
-
   private handleError<T> (operation = 'operation', result?: T) {
+    // handles any errors retrieving Hero data over HTTP
     return (error: any): Observable<T> => {
       // log to console
       console.error(error);
-
       // error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-
       // Let the app keep running by returning an empty result
       return of(result as T);
     } 
   }
 
   
-
-
+  // Public Methods
   getHeroes(): Observable<Hero[]> {
-
-    // TODO: send the message _after_ fetching the heroes
+    // retrieve all Heroes
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
+        tap(heroes => this.log('fetched heroes')),
         catchError(this.handleError('getHeroes', []))
       );
   }
 
-
-
-  // getHero(id: number): Observable<Hero> {
-
-  //   // TODO: send the message _after_ fetching the hero
-  //   this.messageService.add(`Hero Service: fetched id=${id}`);
-  //   return of(HEROES.find(hero => hero.id === id));
-  // }
-
-
-
+  getHero(id: number): Observable<Hero> {
+    // retrieve Hero's Detail
+    const url = `${this.heroesUrl}/${id}`
+    return this.http.get<Hero>(url)
+      .pipe(
+        tap(_ => this.log(`fetched hero id=${id}`)),
+        catchError(this.handleError<Hero>(`getHero id= ${id}`))
+      );
+  }
 }
