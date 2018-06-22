@@ -1,3 +1,4 @@
+// Hero Detail Component
 
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute  } from "@angular/router";
@@ -40,6 +41,13 @@ export class HeroDetailComponent implements OnInit {
 
 
   goBack(): void {
+    // navigates back to previous page
     this.location.back();
-  } 
+  }
+
+  save(): void {
+    // saves Hero object on button click event
+    this.heroService.updateHero(this.hero)
+      .subscribe(() => this.goBack());
+  }
 }
