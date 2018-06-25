@@ -4,23 +4,38 @@
     My Heroes
   </h2>
   
+<!-- addHero input element -->
+<div>
+  <label>
+    Hero Name
+    <input #heroName />
+  </label>
+  <!-- (click) passes 'name' input to add() -->
+  <button (click)="add(heroName.value); heroName.value=''">
+    Add Hero
+  </button>
+</div>
+
   <!-- HERO LIST -->
-  <!-- ngFor & event-binding -->
   <ul class="heroes">
     <li *ngFor="let hero of heroes">
       <a routerLink="/detail/{{hero.id}}"> 
         <span class="badge">{{ hero.id }}</span>{{ hero.name }}
-
       </a>
     </li>
   </ul>
 
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- property binding: 'selectedHero' to '[hero]' property -->
 <!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
-
-
-
-<!-- Refactoring the original HeroesComponent into two components yields benefits, both now and in the future: You simplified
-the HeroesComponent by reducing its responsibilities. You can evolve the HeroDetailComponent into a rich hero editor without
-touching the parent HeroesComponent. You can evolve the HeroesComponent without touching the hero detail view. You can re-use
-the HeroDetailComponent in the template of some future component. -->

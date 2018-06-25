@@ -26,9 +26,9 @@ export class HeroService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
-  
-  private heroesUrl = 'api/heroes'; 
 
+  private heroesUrl = 'api/heroes'; 
+  
   // Private Methods
   private log(message: string) {
     // sends messages from HeroService
@@ -49,6 +49,17 @@ export class HeroService {
 
 
   // Public Methods
+  // add a hero object to the server
+  addHero(hero: Hero): Observable<Hero> {
+    // post a 'new' hero object
+    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
+      .pipe(
+        tap((hero: Hero) => this.log(`added a hero with id=${hero.id}`)),
+        catchError(this.handleError<Hero>('addHero'))
+      );
+  }
+
+
   getHeroes(): Observable<Hero[]> {
     // retrieve all Heroes
     return this.http.get<Hero[]>(this.heroesUrl)
@@ -57,6 +68,7 @@ export class HeroService {
         catchError(this.handleError('getHeroes', []))
       );
   }
+
 
   getHero(id: number): Observable<Hero> {
     // retrieve Hero's Detail
@@ -67,6 +79,7 @@ export class HeroService {
         catchError(this.handleError<Hero>(`getHero id= ${id}`))
       );
   }
+
 
   updateHero(hero: Hero): Observable<any> {
     // save an updated Hero object
