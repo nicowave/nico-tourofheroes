@@ -31,11 +31,13 @@ export class HeroService {
   private heroesUrl = 'api/heroes'; 
   
   // Private Methods
+  // 
+  // message logging
   private log(message: string) {
     // sends messages from HeroService
     this.messageService.add('HeroService: ' + message);
   }
-
+  //  error handler
   private handleError<T> (operation = 'operation', result?: T) {
     // handles any errors retrieving Hero data over HTTP
     return (error: any): Observable<T> => {
@@ -50,6 +52,7 @@ export class HeroService {
 
 
   // Public Methods
+  // 
   // POST 'hero' object to server
   addHero(hero: Hero): Observable<Hero> {
     // post a 'new' hero object
@@ -59,7 +62,6 @@ export class HeroService {
         catchError(this.handleError<Hero>('addHero'))
       );
   }
-
   // DELETE 'hero' object from server
   deleteHero(hero: Hero | number): Observable<Hero> {
     // remove a hero
@@ -72,7 +74,6 @@ export class HeroService {
         catchError(this.handleError<Hero>('deleteHero'))
       )
   }
-
   // GET 'heroes' object
   getHeroes(): Observable<Hero[]> {
     // retrieve all heroes
@@ -82,7 +83,6 @@ export class HeroService {
         catchError(this.handleError('getHeroes', []))
       );
   }
-
   // GET a 'hero' object by 'id'
   getHero(id: number): Observable<Hero> {
     // retrieve hero's Detail
@@ -93,7 +93,6 @@ export class HeroService {
         catchError(this.handleError<Hero>(`getHero id= ${id}`))
       );
   }
-
   // PUT an update to a 'hero' object
   updateHero(hero: Hero): Observable<any> {
     // save a hero
@@ -103,4 +102,14 @@ export class HeroService {
         catchError(this.handleError<any>('updatedHero'))
       );
   }
+
+  searchHeroes(term: string): Observable<Hero[]> {
+     // if not a search term, return empty array
+    if (!term.trim()) { return of([]) }
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`)
+      .pipe(
+        tap(_ => this.log(`found heroes matching term "${term}"`)),
+        catchError(this.handleError<Hero[]>('searchHeroes', []))
+      );
+  } 
 }

@@ -15,7 +15,6 @@ import { Hero } from '../hero';
 
 export class HeroesComponent implements OnInit {
 
-
   heroes: Hero[];
 
   constructor(private heroService: HeroService) { }
@@ -23,7 +22,7 @@ export class HeroesComponent implements OnInit {
   // Public Methods
   add(name: string): void {
     name = name.trim();
-    if ( !name ) { return; }
+    if ( !name ) { return }
     // addHero() method is passed new 'hero' object
     this.heroService.addHero({ name } as Hero)
       .subscribe(hero => {
