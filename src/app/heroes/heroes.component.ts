@@ -22,7 +22,7 @@ export class HeroesComponent implements OnInit {
 
   // Public Methods
   add(name: string): void {
-    name: name.trim();
+    name = name.trim();
     if ( !name ) { return; }
     // addHero() method is passed new 'hero' object
     this.heroService.addHero({ name } as Hero)
@@ -30,6 +30,12 @@ export class HeroesComponent implements OnInit {
         this.heroes.push(hero)
       });
   }
+
+
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
+  }  
 
 
   getHeroes(): void {

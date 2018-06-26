@@ -27,6 +27,7 @@ export class HeroService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
+    
   private heroesUrl = 'api/heroes'; 
   
   // Private Methods
@@ -49,7 +50,7 @@ export class HeroService {
 
 
   // Public Methods
-  // add a hero object to the server
+  // POST 'hero' object to server
   addHero(hero: Hero): Observable<Hero> {
     // post a 'new' hero object
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
@@ -59,9 +60,22 @@ export class HeroService {
       );
   }
 
+  // DELETE 'hero' object from server
+  deleteHero(hero: Hero | number): Observable<Hero> {
+    // remove a hero
+    const id = typeof hero === 'number' ? hero : hero.id;
+    const url = `${this.heroesUrl}/${id}`;
 
+    return  this.http.delete<Hero>(url, httpOptions)
+      .pipe(
+        tap(_ => this.log(`deleted hero id=${id}`)),
+        catchError(this.handleError<Hero>('deleteHero'))
+      )
+  }
+
+  // GET 'heroes' object
   getHeroes(): Observable<Hero[]> {
-    // retrieve all Heroes
+    // retrieve all heroes
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
         tap(heroes => this.log('fetched heroes')),
@@ -69,9 +83,9 @@ export class HeroService {
       );
   }
 
-
+  // GET a 'hero' object by 'id'
   getHero(id: number): Observable<Hero> {
-    // retrieve Hero's Detail
+    // retrieve hero's Detail
     const url = `${this.heroesUrl}/${id}`
     return this.http.get<Hero>(url)
       .pipe(
@@ -80,9 +94,9 @@ export class HeroService {
       );
   }
 
-
+  // PUT an update to a 'hero' object
   updateHero(hero: Hero): Observable<any> {
-    // save an updated Hero object
+    // save a hero
     return this.http.put(this.heroesUrl, hero, httpOptions)
       .pipe(
         tap(_ => this.log(`updated hero id=${hero.id}`)),
