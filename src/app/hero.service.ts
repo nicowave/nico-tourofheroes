@@ -103,7 +103,7 @@ export class HeroService {
       );
   }
 
-  searchHeroes(term: string): Observable<Hero[]> {
+  searchHeroes(term: String): Observable<Hero[]> {
      // if not a search term, return empty array
     if (!term.trim()) { return of([]) }
     return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`)
